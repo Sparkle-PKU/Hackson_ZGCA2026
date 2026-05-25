@@ -30,9 +30,11 @@ async function main() {
       "emotion" TEXT,
       "tags" TEXT,
       "storyValue" TEXT,
+      "imageDescription" TEXT,
       "rawAi" TEXT
     );
   `);
+  await prisma.$executeRawUnsafe(`ALTER TABLE "Record" ADD COLUMN "imageDescription" TEXT;`).catch(() => undefined);
   await prisma.$executeRawUnsafe(`CREATE INDEX IF NOT EXISTS "Record_capturedAt_idx" ON "Record"("capturedAt");`);
 
   await prisma.$executeRawUnsafe(`

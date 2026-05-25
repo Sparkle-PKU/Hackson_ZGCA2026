@@ -240,7 +240,8 @@ async function callChatCompletions(body: Record<string, unknown>) {
   });
 
   if (!response.ok) {
-    throw new Error(`LLM request failed with status ${response.status}`);
+    const errorBody = await response.text().catch(() => "");
+    throw new Error(`LLM request failed with status ${response.status}: ${errorBody.slice(0, 500)}`);
   }
 
   const data = (await response.json()) as ChatCompletionResponse;
@@ -249,7 +250,10 @@ async function callChatCompletions(body: Record<string, unknown>) {
 
 export async function analyzeImage(imageFilePath: string, userNote?: string | null): Promise<AiRecordInsight> {
   const config = getApiConfig();
-  if (!config.apiKey) return localFallbackInsight(userNote);
+  if (!config.apiKey) {
+    console.warn("LLM_API_KEY/OPENAI_API_KEY is missing. Using local fallback insight.");
+    return localFallbackInsight(userNote);
+  }
 
   try {
     const buffer = await readFile(imageFilePath);
@@ -291,13 +295,17 @@ export async function analyzeImage(imageFilePath: string, userNote?: string | nu
     const imageDescription = lines[0]?.trim() || "";
 
     const jsonStr = lines.slice(1).join("\n");
-    const parsed = extractJson(jsonStr);
+    const parsed = extractJson(jsonStr) || extractJson(content);
+    if (!parsed) {
+      console.warn("Vision model returned non-JSON content. Using image description fallback.", content.slice(0, 500));
+    }
 
     return coerceInsight({
       ...parsed,
       imageDescription: imageDescription || parsed?.summary || ""
     });
-  } catch {
+  } catch (error) {
+    console.error("Vision analysis failed. Using local fallback insight.", error);
     return localFallbackInsight(userNote);
   }
 }
@@ -358,8 +366,10 @@ ${JSON.stringify(items, null, 2)}
     const parsed = extractStructuredJson(content);
     if (parsed) return parsed;
 
+    console.warn("Report model returned non-JSON content. Using local fallback report.", content.slice(0, 500));
     return localFallbackReport(records, year, month);
-  } catch {
+  } catch (error) {
+    console.error("Structured report generation failed. Using local fallback report.", error);
     return localFallbackReport(records, year, month);
   }
 }
