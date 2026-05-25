@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: life-echo
+    runtime: node
+    plan: free
+    buildCommand: npm install --include=dev && npm run prisma:generate && npm run build
+    startCommand: npm run start:render
+    envVars:
+      - key: DATABASE_URL
+        value: file:../data/dev.db

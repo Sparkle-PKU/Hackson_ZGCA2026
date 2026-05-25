@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Record {
+  id           String   @id @default(cuid())
+  imagePath    String
+  originalName String?
+  userNote     String?
+  capturedAt   DateTime
+  uploadedAt   DateTime @default(now())
+  aiStatus     String   @default("pending")
+  aiSummary    String?
+  location     String?
+  people       String?
+  activities   String?
+  food         String?
+  objects      String?
+  transport    String?
+  emotion      String?
+  tags         String?
+  storyValue   String?
+  rawAi        String?
+
+  @@index([capturedAt])
+}
+
+model Report {
+  id          String   @id @default(cuid())
+  periodType  String
+  periodStart DateTime
+  periodEnd   DateTime
+  title       String
+  narrative   String
+  stats       String
+  highlights  String
+  createdAt   DateTime @default(now())
+
+  @@index([periodType, periodStart, periodEnd])
+}
