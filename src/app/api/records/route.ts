@@ -62,6 +62,7 @@ export async function POST(request: Request) {
       emotion: insight.emotion || null,
       tags: JSON.stringify(insight.tags),
       storyValue: insight.story_value,
+      imageDescription: insight.imageDescription || null,
       rawAi: JSON.stringify(insight)
     }
   });

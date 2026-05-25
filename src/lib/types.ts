@@ -12,6 +12,7 @@ export type AiRecordInsight = {
   emotion?: string;
   tags: string[];
   story_value: string;
+  imageDescription?: string;
 };
 
 export type SerializedRecord = Omit<
@@ -26,28 +27,74 @@ export type SerializedRecord = Omit<
   objects: string[];
   transport: string[];
   tags: string[];
+  imageDescription?: string | null;
 };
 
-export type ReportPayload = {
-  title: string;
+export type StructuredReport = {
+  themeName: string;
   subtitle: string;
-  opening: string;
+  title: string;
+  coverImage: string;
+  prologue: string;
   keywords: string[];
   stats: {
     totalRecords: number;
     activeDays: number;
-    topLocations: Array<{ name: string; count: number }>;
-    topActivities: Array<{ name: string; count: number }>;
-    topFood: Array<{ name: string; count: number }>;
-    topEmotions: Array<{ name: string; count: number }>;
+    topLocations: string[];
+    topActivities: string[];
+    topEmotions: string[];
   };
-  moments: Array<{
-    id: string;
-    date: string;
+  yearNarrative: Array<{
     title: string;
     text: string;
-    imagePath: string;
+  }>;
+  featureSections: Array<{
+    title: string;
+    subtitle: string;
+    text: string;
     tags: string[];
+    images: string[];
+  }>;
+  moments: Array<{
+    title: string;
+    date: string;
+    text: string;
+    image: string;
+  }>;
+  selfPortrait: string;
+  closing: string;
+};
+
+export type ReportPayload = {
+  themeName: string;
+  title: string;
+  subtitle: string;
+  coverImage: string;
+  prologue: string;
+  keywords: string[];
+  stats: {
+    totalRecords: number;
+    activeDays: number;
+    topLocations: string[];
+    topActivities: string[];
+    topEmotions: string[];
+  };
+  yearNarrative: Array<{
+    title: string;
+    text: string;
+  }>;
+  featureSections: Array<{
+    title: string;
+    subtitle: string;
+    text: string;
+    tags: string[];
+    images: string[];
+  }>;
+  moments: Array<{
+    title: string;
+    date: string;
+    text: string;
+    image: string;
   }>;
   timeline: Array<{
     id: string;
@@ -56,8 +103,11 @@ export type ReportPayload = {
     location?: string | null;
     emotion?: string | null;
     imagePath: string;
+    imageDescription?: string | null;
   }>;
+  selfPortrait: string;
   closing: string;
+  structured?: StructuredReport;
 };
 
 export function jsonArray(value: unknown): string[] {

@@ -71,6 +71,7 @@ export function RecordsManager() {
                   ) : null}
                 </div>
                 <h2>{record.aiSummary || record.userNote || "一条生活记录"}</h2>
+                {record.imageDescription ? <p className="image-desc-text">{record.imageDescription}</p> : null}
                 {record.storyValue ? <p>{record.storyValue}</p> : null}
                 <div className="archive-tags">
                   {[...record.tags, record.emotion || ""].filter(Boolean).slice(0, 5).map((tag) => (

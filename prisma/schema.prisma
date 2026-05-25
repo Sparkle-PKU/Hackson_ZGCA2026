@@ -24,8 +24,9 @@ model Record {
   transport    String?
   emotion      String?
   tags         String?
-  storyValue   String?
-  rawAi        String?
+  storyValue       String?
+  imageDescription String?
+  rawAi            String?
 
   @@index([capturedAt])
 }
