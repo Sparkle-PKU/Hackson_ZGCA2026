@@ -53,7 +53,7 @@ export async function buildReport(records: SerializedRecord[], year: number, mon
     .reverse();
 
   return {
-    title: `${periodName}生活回声`,
+    title: `${periodName}懒得记`,
     subtitle: "由你的日常照片、只言片语和时间线生成",
     opening,
     keywords: keywords.length > 0 ? keywords : ["生活切片", "值得记住"],

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: life-echo
+    name: lazylog
     runtime: node
     plan: free
     buildCommand: npm install --include=dev && npm run prisma:generate && npm run build

@@ -179,7 +179,7 @@ function ReportBook({ report }: { report: ReportPayload }) {
             </div>
             <div className="cover-meta">
               <p className="cover-kicker">MY LIFE REPORT</p>
-              <h2>{report.title.replace("生活回声", "") || report.title}</h2>
+              <h2>{report.title.replace("懒得记", "") || report.title}</h2>
               <p>{report.subtitle}</p>
               <div className="cover-player">
                 <span>05:20</span>

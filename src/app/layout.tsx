@@ -5,8 +5,8 @@ import { Archive, Camera, Sparkles } from "lucide-react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "生活年度报告生成器",
-  description: "上传日常照片，让 AI 生成可以回看的生活报告。"
+  title: "懒得记 lazylog",
+  description: "人可以懒，回忆不能散。"
 };
 
 export const viewport: Viewport = {
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
               <Link href="/" className="flex items-center gap-2 text-lg font-black tracking-[0.08em]">
                 <Sparkles size={22} color="#e46d9c" />
-                生活回声
+                懒得记
               </Link>
               <nav className="flex items-center gap-2 text-sm">
                 <Link className="icon-button secondary px-3 py-2" href="/" title="上传记录">

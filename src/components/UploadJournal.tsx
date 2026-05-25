@@ -100,13 +100,13 @@ export function UploadJournal() {
         <div className="simple-copy">
           <p className="lazy-pill">
             <Sparkles size={16} />
-            懒人生活记录
+            lazylog
           </p>
           <h1>
-            拍了，
-            <span>就算记过。</span>
+            人可以懒，
+            <span>回忆不能散。</span>
           </h1>
-          <p>不写日记也没关系。上传照片，AI 帮你整理成以后能回看的生活报告。</p>
+          <p>上传照片，最多补一句话。剩下的整理、回看和总结，交给 AI 慢慢记住。</p>
           <div className="simple-links">
             <Link href="/report">生成报告</Link>
             <Link href="/records">管理记录</Link>
