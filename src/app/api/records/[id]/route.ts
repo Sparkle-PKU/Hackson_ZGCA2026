@@ -1,5 +1,8 @@
+import { unlink } from "node:fs/promises";
+import path from "node:path";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { safeUploadPath } from "@/lib/storage";
 import { serializeRecord } from "@/lib/types";
 
 function asArray(value: unknown) {
@@ -29,4 +32,16 @@ export async function PATCH(request: Request, context: { params: Promise<{ id: s
   });
 
   return NextResponse.json(serializeRecord(record));
+}
+
+export async function DELETE(_request: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  const record = await prisma.record.delete({ where: { id } });
+  const filename = path.basename(decodeURIComponent(record.imagePath.split("/").pop() || ""));
+
+  if (filename) {
+    await unlink(safeUploadPath(filename)).catch(() => undefined);
+  }
+
+  return NextResponse.json({ ok: true });
 }

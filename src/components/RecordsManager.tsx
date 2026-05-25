@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Archive, CalendarDays, MapPin, Sparkles } from "lucide-react";
+import { Archive, CalendarDays, MapPin, Sparkles, Trash2 } from "lucide-react";
 import type { SerializedRecord } from "@/lib/types";
 
 export function RecordsManager() {
   const [records, setRecords] = useState<SerializedRecord[]>([]);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function loadRecords() {
     const response = await fetch("/api/records");
@@ -17,6 +18,16 @@ export function RecordsManager() {
   useEffect(() => {
     loadRecords();
   }, []);
+
+  async function deleteRecord(id: string) {
+    if (!window.confirm("确定删除这条记录吗？")) return;
+    setDeletingId(id);
+    const response = await fetch(`/api/records/${id}`, { method: "DELETE" });
+    if (response.ok) {
+      setRecords((current) => current.filter((record) => record.id !== id));
+    }
+    setDeletingId(null);
+  }
 
   return (
     <main className="archive-page mx-auto max-w-7xl px-4 py-8 md:px-8">
@@ -66,6 +77,10 @@ export function RecordsManager() {
                     <span key={tag}>{tag}</span>
                   ))}
                 </div>
+                <button className="archive-delete" type="button" onClick={() => deleteRecord(record.id)} disabled={deletingId === record.id}>
+                  <Trash2 size={15} />
+                  {deletingId === record.id ? "删除中" : "删除"}
+                </button>
               </div>
             </article>
           ))}

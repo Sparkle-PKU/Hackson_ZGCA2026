@@ -781,6 +781,27 @@ select {
   font-weight: 900;
 }
 
+.archive-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 34px;
+  margin-top: 0.75rem;
+  border: 1px solid rgba(36, 31, 33, 0.14);
+  background: rgba(255, 255, 255, 0.68);
+  color: #9b315e;
+  padding: 0 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.archive-delete:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 @media (max-width: 720px) {
   .memory-frame {
     border-width: 6px;
