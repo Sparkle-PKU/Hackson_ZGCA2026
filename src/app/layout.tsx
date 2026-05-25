@@ -5,7 +5,7 @@ import { Archive, Camera, Sparkles } from "lucide-react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "懒得记 lazylog",
+  title: "懒得记",
   description: "人可以懒，回忆不能散。"
 };
 

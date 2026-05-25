@@ -100,7 +100,7 @@ export function UploadJournal() {
         <div className="simple-copy">
           <p className="lazy-pill">
             <Sparkles size={16} />
-            lazylog
+            懒得记
           </p>
           <h1>
             人可以懒，
